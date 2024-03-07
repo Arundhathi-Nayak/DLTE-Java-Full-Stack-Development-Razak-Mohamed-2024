@@ -13,4 +13,5 @@ public interface TransactionRepository {
     List<Transaction> findAllByDate(Date date);
     List<Transaction> findAllByMerchant(Integer merchantId);
     void saveMerchant(Merchant merchant);
+
 }

@@ -28,10 +28,11 @@ public class App
     private static CreditCard creditCard;
     public static void main( String[] args )
     {
-//        storageTarget=new FileStorageTarget();
-        storageTarget=new DatabaseTarget();
+       storageTarget=new FileStorageTarget();
+        //storageTarget=new DatabaseTarget();
         services=new CreditCardServices(storageTarget);
         System.out.println(resourceBundle.getString("app.greet"));
+       // services.callSave(new CreditCard(123456L,874,new Date("1/31/2035"),100000,80000,20000,1234,true,"Razak Mohamed S"));
         loggingIn();
         if(creditCard==null) {
             return;
@@ -77,7 +78,7 @@ public class App
                         System.out.println("Enter the Transaction details such as merchant name,id,amount");
                         Transaction transaction=new Transaction();
                         transaction.setTransactionDoneBy(creditCard.getCardNumber());
-                        transaction.setTransactionDate(new Date());
+                        transaction.setTransactionDate(new Date(scanner.next()));
                         String nameOfTheMerchant= scanner.next();
                         transaction.setMerchant(scanner.nextInt());
                         transaction.setTransactionAmount(scanner.nextDouble());
@@ -101,6 +102,11 @@ public class App
                             System.out.println(creditCardException);
                         }
                         break;
+                    case 6:
+                        System.out.println("View by merchant id");
+                        System.out.println(transactionService.findAllByMerchant(scanner.nextInt()));
+                        break;
+
                     case 5:
                         System.out.println("Handover the card");
                         creditCard.setCardStatus(false);
@@ -110,6 +116,9 @@ public class App
                         catch (CreditCardException creditCardException){
                             System.out.println(creditCardException);
                         }
+                        break;
+                    case 7:System.out.println("View transaaction by date");
+                        System.out.println(transactionService.findAllByDate(new Date(scanner.next())));
                         break;
                     default:return;
                 }
@@ -168,7 +177,7 @@ public class App
 ////        CreditCardServices services=new CreditCardServices(storageTarget);
 //        CreditCardServices services=new CreditCardServices();
 //        //services.callSave(new CreditCard(7656787656L,874,new Date("1/31/2035"),100000,80000,20000,1111,true,"Razak Mohamed S"));
-////        CreditCard creditCard=new CreditCard(13727363L,192,new Date("10/28/2035"),100000,60000,40000,9999,true,"Sanath");
+////       CreditCard creditCard=new CreditCard(13727363L,192,new Date("10/28/2035"),100000,60000,40000,9999,true,"Sanath");
 ////        try{
 ////            services.callSave(creditCard);
 ////        }
